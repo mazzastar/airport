@@ -12,13 +12,12 @@ describe Airport do
   let(:plane) {double :plane}
   let(:landing_plane) {double :landing_plane, land: :landing_plane} 
   context 'airport sunny' do 
+   
     before do
       airport.stub(:weather_status).and_return("sunny")
     end
+   
     context 'airport creation' do
-      # before do
-      #    airport.stub(:weather_status).and_return("sunny")
-      # end
 
       it 'has no planes when created' do 
         expect(airport).not_to have_planes 
@@ -39,9 +38,6 @@ describe Airport do
 
     context 'taking off and landing' do
 
-      # before do
-      #    airport.stub(:weather_status).and_return("sunny")
-      # end
       it 'a plane can land' do
         expect(plane).to receive(:land)
         airport.accepts(plane)
@@ -71,7 +67,6 @@ describe Airport do
        airport.stub(:weather_status).and_return("sunny")
     end
     it 'a plane cannot land if the airport is full' do
-      # plane = double :plane, land: :plane
       times = (airport.class::CAPACITY)+1
       expect{times.times{airport.accepts(landing_plane)}}.to raise_error "FULL"
     end
@@ -86,7 +81,6 @@ describe Airport do
     context 'weather conditions' do
 
       it 'a plane cannot take off when there is a storm brewing' do
-        # plane = double :plane
         airport = Airport.new([plane])
         airport.stub(:weather_status).and_return("stormy")
         expect{airport.departs(plane)}.to raise_error "Cannot fly in storm"
