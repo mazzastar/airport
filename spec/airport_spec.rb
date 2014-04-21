@@ -11,60 +11,60 @@ describe Airport do
   let(:airport) { Airport.new }
   let(:plane) {double :plane}
   let(:landing_plane) {double :landing_plane, land: :landing_plane} 
-
-  context 'airport creation' do
+  context 'airport sunny' do 
     before do
-       airport.stub(:weather_status).and_return("sunny")
+      airport.stub(:weather_status).and_return("sunny")
+    end
+    context 'airport creation' do
+      # before do
+      #    airport.stub(:weather_status).and_return("sunny")
+      # end
+
+      it 'has no planes when created' do 
+        expect(airport).not_to have_planes 
+      end
+
+      it 'is not full when created' do 
+        expect(airport).not_to be_full
+      end
+
+      it 'can be created with planes' do
+        airport = Airport.new([plane, plane])
+        airport.stub(:weather_status).and_return("sunny")
+        expect(airport).to have_planes
+      end
+
     end
 
-    it 'has no planes when created' do 
-      expect(airport).not_to have_planes 
-    end
 
-    it 'is not full when created' do 
-      expect(airport).not_to be_full
-    end
+    context 'taking off and landing' do
 
-    it 'can be created with planes' do
-      # plane = double :plane
-      plane2 = double :plane
-      airport = Airport.new([plane, plane2])
-      expect(airport).to have_planes
-    end
+      # before do
+      #    airport.stub(:weather_status).and_return("sunny")
+      # end
+      it 'a plane can land' do
+        expect(plane).to receive(:land)
+        airport.accepts(plane)
+      end
 
-  end
+      it 'has planes after a plane lands' do
+        expect(airport.accepts(landing_plane)).to have_planes
+      end
+      
+      it 'a plane can take off' do
+        plane = double :plane, land: nil
+        airport.accepts(plane)
+        expect(plane).to receive(:takeoff)
+        airport.departs(plane)
+      end
+      it 'has no planes after plane takes off' do
+        plane = double :plane, land: nil, takeoff: nil
+        airport.accepts(plane)
+        expect(airport.departs(plane)).not_to have_planes
+      end
 
-
-  context 'taking off and landing' do
-
-    before do
-       airport.stub(:weather_status).and_return("sunny")
     end
-    it 'a plane can land' do
-      # plane = double :plane
-      expect(plane).to receive(:land)
-      airport.accepts(plane)
-    end
-
-    it 'has planes after a plane lands' do
-      # plane = double :plane, land: nil
-      expect(airport.accepts(landing_plane)).to have_planes
-    end
-    
-    it 'a plane can take off' do
-      plane = double :plane, land: nil
-      airport.accepts(plane)
-      expect(plane).to receive(:takeoff)
-      airport.departs(plane)
-    end
-    it 'has no planes after plane takes off' do
-      plane = double :plane, land: nil, takeoff: nil
-      airport.accepts(plane)
-      expect(airport.departs(plane)).not_to have_planes
-    end
-
-  end
-  
+  end 
   context 'traffic control' do
 
     before do
