@@ -142,13 +142,9 @@ describe "The grand finale (last spec)" do
     landing_expected = ["landed"]*6
     airport.land_all(planes_to_land)
     expect(planes_to_land.map{|plane| plane.status}).to eq landing_expected
-    # puts planes_to_land.map{|plane| plane.status}.inspect
-    # puts "****************"
-
 
     flying_expected = ["flying"]*6
     airport.fly_all
-    # puts planes_to_land.map{|plane| plane.status}.inspect
     expect(planes_to_land.map{|plane| plane.status}).to eq flying_expected
 
 

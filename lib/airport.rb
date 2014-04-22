@@ -28,10 +28,8 @@ class Airport
 	def departs(plane)
 		raise "Cannot fly in storm" if weather_status == "stormy"
 		plane.takeoff!
-		plane2 = @planes.delete(plane)
-		# plane2.takeoff!
-		# puts plane2.status
-		 self
+		@planes.delete(plane)
+		self
 	end
 
 	def list_of_planes
@@ -46,14 +44,11 @@ class Airport
 				retry
 			end
 		end
-		# self
+		self
 	end
 
 	def fly_all
 		if full?
-			# puts @planes.inspect
-			# puts full?
-			# puts @planes.length
 			while @planes.empty? ==false
 				plane = @planes.pop
 				begin
@@ -62,24 +57,8 @@ class Airport
 					retry
 				end
 			end
-
-			# @planes.each do |plane|
-			# 	 begin
-			# 		departs(plane)
-			# 		if plane.status == "landed"
-			# 			# departs(plane)
-			# 		end
-			# 		# puts plane.status
-			# 	 rescue
-			# 		# puts plane.status
-
-			# 		 retry
-			# 	 end
-			# end
 		end
-		puts @planes.inspect
-
-		# self
+		self
 	end
 
 end
