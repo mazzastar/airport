@@ -10,7 +10,7 @@ require 'plane'
 describe Airport do
   let(:airport) { Airport.new }
   let(:plane) {double :plane}
-  let(:landing_plane) {double :landing_plane, land: :landing_plane} 
+  let(:landing_plane) {double :landing_plane, land!: :landing_plane} 
   context 'airport sunny' do 
    
     before do
@@ -39,7 +39,7 @@ describe Airport do
     context 'taking off and landing' do
 
       it 'a plane can land' do
-        expect(plane).to receive(:land)
+        expect(plane).to receive(:land!)
         airport.accepts(plane)
       end
 
@@ -48,13 +48,13 @@ describe Airport do
       end
       
       it 'a plane can take off' do
-        plane = double :plane, land: nil
+        plane = double :plane, land!: nil
         airport.accepts(plane)
-        expect(plane).to receive(:takeoff)
+        expect(plane).to receive(:takeoff!)
         airport.departs(plane)
       end
       it 'has no planes after plane takes off' do
-        plane = double :plane, land: nil, takeoff: nil
+        plane = double :plane, land!: nil, takeoff!: nil
         airport.accepts(plane)
         expect(airport.departs(plane)).not_to have_planes
       end
@@ -108,17 +108,17 @@ describe Plane do
   end
   
   it 'can land' do
-    plane.land
+    plane.land!
     expect(plane.status).to eq "landed"
   end
 
   it 'can take off' do
-    expect(plane.takeoff).to be_flying
+    expect(plane.takeoff!).to be_flying
   end
   
   it 'changes its status to flying after taking off' do
-    plane.land
-    plane.takeoff
+    plane.land!
+    plane.takeoff!
     expect(plane.status).to eq "flying"
   end
   
@@ -129,7 +129,28 @@ end
 # Be careful of the weather, it could be stormy!
 # Check when all the planes have landed that they have the right status "landed"
 # Once all the planes are in the air again, check that they have the status of flying!
-describe "The gand finale (last spec)" do
+describe "The grand finale (last spec)" do
+   let(:airport) { Airport.new }
+    # before do
+    #    # airport.stub(:weather_status).and_return("sunny")
+    # end
+
+
   it 'all planes can land and all planes can take off' do
+    planes_to_land = []
+    6.times{planes_to_land << Plane.new}
+    landing_expected = ["landed"]*6
+    airport.land_all(planes_to_land)
+    expect(planes_to_land.map{|plane| plane.status}).to eq landing_expected
+    # puts planes_to_land.map{|plane| plane.status}.inspect
+    # puts "****************"
+
+
+    flying_expected = ["flying"]*6
+    airport.fly_all
+    # puts planes_to_land.map{|plane| plane.status}.inspect
+    expect(planes_to_land.map{|plane| plane.status}).to eq flying_expected
+
+
   end
 end
