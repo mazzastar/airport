@@ -1,6 +1,7 @@
 class Plane
+	# you need an id for ???
 		@@id =0
-	
+
 
 	def initialize
 		@flying = true
@@ -27,7 +28,7 @@ class Plane
 		if flying?
 			# puts "flying"
 			return "flying"
-		else 
+		else
 			# announcement(@id, "taking off")
 			# puts "not flying"
 			return "landed"
