@@ -1,12 +1,6 @@
 require 'airport'
 require 'plane'
  
-# A plane currently in the airport can be requested to take off.
-#
-# No more planes can be added to the airport, if it's full.
-# It is up to you how many planes can land in the airport and how that is impermented.
-#
-# If the airport is full then no planes can land
 describe Airport do
   let(:airport) { Airport.new }
   let(:plane) {double :plane}
@@ -18,7 +12,6 @@ describe Airport do
     end
    
     context 'airport creation' do
-
       it 'has no planes when created' do 
         expect(airport).not_to have_planes 
       end
@@ -35,9 +28,7 @@ describe Airport do
 
     end
 
-
     context 'taking off and landing' do
-
       it 'a plane can land' do
         expect(plane).to receive(:land!)
         airport.accepts(plane)
@@ -53,16 +44,16 @@ describe Airport do
         expect(plane).to receive(:takeoff!)
         airport.departs(plane)
       end
+
       it 'has no planes after plane takes off' do
         plane = double :plane, land!: nil, takeoff!: nil
         airport.accepts(plane)
         expect(airport.departs(plane)).not_to have_planes
       end
-
     end
   end 
-  context 'traffic control' do
 
+  context 'traffic control' do
     before do
        airport.stub(:weather_status).and_return("sunny")
     end
@@ -71,15 +62,7 @@ describe Airport do
       expect{times.times{airport.accepts(landing_plane)}}.to raise_error "FULL"
     end
     
-    # Include a weather condition using a module.
-    # The weather must be random and only have two states "sunny" or "stormy".
-    # Try and take off a plane, but if the weather is stormy, the plane can not take off and must remain in the airport.
-    # 
-      # This will require stubbing to stop the random return of the weather.
-    # If the airport has a weather condition of stormy,
-    # the plane can not land, and must not be in the airport
     context 'weather conditions' do
-
       it 'a plane cannot take off when there is a storm brewing' do
         airport = Airport.new([plane])
         airport.stub(:weather_status).and_return("stormy")
@@ -94,11 +77,6 @@ describe Airport do
   end
 end
  
-# When we create a new plane, it should have a "flying" status, thus planes can not be created in the airport.
-#
-# When we land a plane at the airport, the plane in question should have its status changed to "landed"
-#
-# When the plane takes of from the airport, the plane's status should become "flying"
 describe Plane do
  
   let(:plane) { Plane.new }
@@ -131,10 +109,6 @@ end
 # Once all the planes are in the air again, check that they have the status of flying!
 describe "The grand finale (last spec)" do
    let(:airport) { Airport.new }
-    # before do
-    #    # airport.stub(:weather_status).and_return("sunny")
-    # end
-
 
   it 'all planes can land and all planes can take off' do
     planes_to_land = []

@@ -1,13 +1,10 @@
 class Plane
-	# you need an id for ???
-		@@id =0
-
+	@@id =0
 
 	def initialize
 		@flying = true
 		@@id = @@id+1
 		@id = @@id
-
 	end
 
 	def flying?
@@ -26,11 +23,8 @@ class Plane
 
 	def status
 		if flying?
-			# puts "flying"
 			return "flying"
 		else
-			# announcement(@id, "taking off")
-			# puts "not flying"
 			return "landed"
 		end
 	end

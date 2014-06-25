@@ -3,7 +3,9 @@ require_relative 'weather_conditions'
 class Airport
 
 	include Weather
+	
 	CAPACITY = 6
+
 	def initialize(planes = [])
 		@planes = planes
 	end
@@ -13,7 +15,6 @@ class Airport
 	end
 
 	def full?
-		# @planes.count == self.class::CAPACITY
 		@planes.count == CAPACITY
 	end
 
@@ -60,5 +61,4 @@ class Airport
 		end
 		self
 	end
-
 end
