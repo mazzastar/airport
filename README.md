@@ -1,7 +1,6 @@
-PASS (just)
-====
+An airport control center simulator
+===================================
 
-I read the readme but it was empty
+A Makers Academy exercise in writing software to control the flow of planes at an airport. The planes can land and take off provided that the weather is sunny. Occasionally it may be stormy, in which case no planes can land or take off. 
 
-Use a sperate test file for each class
-Check your indentation and spacing
+The task was to create a set of classes/modules to makes the given test suite pass. This used a random number generator to set the weather (it is normally sunny but on rare occasions it may be stormy). Every plane has a status indicating whether it's flying or landed.
